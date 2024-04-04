@@ -14,7 +14,7 @@
         <div class="container">
             <div class="row">
                 <!-- Blog entries-->
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <!-- Nested row for non-featured blog posts-->
                     <div class="row">
                         @foreach($posts as $post)
@@ -26,12 +26,15 @@
                                     <div class="small text-muted">{{ $post->created_at }}</div>
                                     <h2 class="card-title h4">{{ $post->title }}</h2>
                                     <p class="card-text">{{ $post->post_text }}</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
+                                    <center>
+                                    <a class="btn btn-primary" href="{{ route('edit',$post->id) }}"><i class="fa-regular fa-pen-to-square"></i>&nbsp;&nbsp;&nbsp;&nbsp;Edit</a>
+                                    <a class="btn btn-destroy" href="{{ route('destroy',$post->id) }}"><i class="fa-solid fa-xmark"></i>&nbsp;&nbsp;Delete</a>
+                                    </center>
                                 </div>
                             </div>
                           @endforeach
                     <center>
-                     <a href="{{route('post_page')}}" class="btn btn-primary">Add Post</a>
+                     <a href="{{ route('show')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add Post</a>
                     </center>
                <br><br><br>
                 </div>

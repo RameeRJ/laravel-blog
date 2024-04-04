@@ -9,5 +9,8 @@ Route::get('/',[HomeController::class,'index'])
 Route::view('/about','about')->name('about');
 Route::view('/contact','contact')->name('contact');
 
-Route::get('/post_page',[PostController::class,'post_page'])->name('post_page');
-Route::post('/add_post',[PostController::class,'add_post'])->name('add_post');
+Route::get('/post_page',[PostController::class,'show'])->name('show');
+Route::post('/create',[PostController::class,'create'])->name('create');
+Route::get('/edit/{id}',[PostController::class,'edit'])->name('edit');
+Route::post('/update/{id}',[PostController::class,'update'])->name('update');
+Route::get('/destroy/{id}',[PostController::class,'destroy'])->name('destroy');

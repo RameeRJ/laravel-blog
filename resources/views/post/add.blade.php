@@ -55,13 +55,23 @@
         }
     </style>
         <h1>Add Post</h1>
-        <form action="{{ route('add_post') }}" method="post">
+        <form action="{{ route('create') }}" method="post">
             @csrf
+
+            <div  class="field category-inputs">
             <label for="title">Post Title:</label>
-            <input type="text" id="title" name="title">
+            <input type="text" id="title" name="title"><br>
+            @error('title')
+            <div style="color:red;">{{ $message }}</div>
+            @enderror
+            </div>
 
             <label for="post_text">Post Description:</label>
-            <textarea id="post_text" name="post_text"></textarea>
+            <textarea id="post_text" name="post_text"></textarea><br>
+            @error('post_text')
+            <div style="color:red;">{{ $message }}</div>
+            @enderror
+            <br><br>
             <button type="submit">Submit</button>
         </form>
 @endsection
