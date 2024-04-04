@@ -15,12 +15,23 @@ class PostController extends Controller
 
     public  function create(Request $request)
     {
+
+        $request->validate([
+            'title'=>'required|max:10|unique:posts',
+            'post_text'=>['required'],
+        ]);
+        $messages = [
+            'title.required' => 'The title field is required.',
+            'title.min' => 'The title must be at least 10 characters.',
+            'title.unique' => 'The title has already been taken.',
+            'text.required' => 'The description field is required.',
+        ];
         
         $post=new Post;
         $post->title = $request->title;
         $post->post_text = $request->post_text;
         $post->save();
-        return redirect()->route('home');
+        return redirect()->route('home')->with('message',"Your post was created successfully!");
 
     }
 
@@ -33,11 +44,23 @@ class PostController extends Controller
 
     public function update(Request $request,$id)
     {
+        
+        $request->validate([
+            'title'=>'required|max:10|unique:posts',
+            'post_text'=>'required',
+        ]);
+        $messages = [
+            'title.required' => 'The title field is required.',
+            'title.min' => 'The title must be at least 10 characters.',
+            'title.unique' => 'The title has already been taken.',
+            'text.required' => 'The description field is required.',
+        ];
+        
         $post = post::find($id);
         $post->title = $request->title;
         $post->post_text = $request->post_text;
         $post->save();
-        return  redirect()->route('home');
+        return redirect()->route('home')->with('message',"Your post was update successfully!");
 
     }
 
@@ -45,7 +68,7 @@ class PostController extends Controller
     {
         $data=Post::find($id);
         $data->delete();
-        return redirect()->back();
+        return redirect()->back()->with('message',"Your post was delete successfully!");
            
     }
 }
