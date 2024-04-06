@@ -16,27 +16,6 @@ label {
     margin-bottom: 5px;
     font-weight: bold;
 }
-
-input[type="text"],
-textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.category-inputs {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.category-input {
-    flex: 1;
-    margin-right: 10px;
-}
-
 button[type="submit"] {
     background-color: #007bff;
     color: #fff;
@@ -57,4 +36,35 @@ button[type="submit"]:hover {
     padding: 50px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="submit"],
+input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #004692;
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
+}
+
+.success {
+    color: green;
+    margin-top: 10px;
 }

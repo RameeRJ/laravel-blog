@@ -7,7 +7,7 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
-    public function show()
+    public function posts()
     {
     return view('post.add');
     }
@@ -30,6 +30,7 @@ class PostController extends Controller
         $post=new Post;
         $post->title = $request->title;
         $post->post_text = $request->post_text;
+        $post->image = $request->image;
         $post->save();
         return redirect()->route('home')->with('message',"Your post was created successfully!");
 
@@ -46,13 +47,12 @@ class PostController extends Controller
     {
         
         $request->validate([
-            'title'=>'required|max:10|unique:posts',
+            'title'=>'required|max:10',
             'post_text'=>'required',
         ]);
         $messages = [
             'title.required' => 'The title field is required.',
-            'title.min' => 'The title must be at least 10 characters.',
-            'title.unique' => 'The title has already been taken.',
+            'title.max' => 'The title must be at least 10 characters.',
             'text.required' => 'The description field is required.',
         ];
         
@@ -71,4 +71,12 @@ class PostController extends Controller
         return redirect()->back()->with('message',"Your post was delete successfully!");
            
     }
+
+    public function show($id)
+    {
+        $post=Post::find($id);
+        return  view('post.show', compact('post'));
+
+    }
+
 }
