@@ -23,7 +23,8 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link" href="{{ route('home') }}"><i class="fa-solid fa-house"></i>&nbsp;&nbsp;Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('about') }}"><i class="fa-solid fa-eject"></i>&nbsp;&nbsp;About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}"><i class="fa-solid fa-address-book"></i>&nbsp;&nbsp;Contact</a></li>
+                       <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}"><i class="fa-solid fa-address-book"></i>&nbsp;&nbsp;Contact</a></li>
+                       <li class="nav-item"><a class="nav-link" href="{{ route('mypost') }}">&nbsp;&nbsp;My Post</a></li>
                     </ul>
                 </div>
             </div>

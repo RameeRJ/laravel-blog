@@ -17,4 +17,10 @@ class HomeController extends Controller
         );
 
     }
+
+    public function mypost()
+    {
+
+        return view('mypost');
+    }
 }

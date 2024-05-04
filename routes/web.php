@@ -3,6 +3,8 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MypostController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth; 
@@ -10,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/home',[HomeController::class,'index'])->name('home');
 Route::view('/about','about')->name('about');
 Route::view('/contact','contact')->name('contact');
+Route::get('/mypost',[HomeController::class,'mypost'])->name('mypost');
+Route::get('/mypost',[MyPostController::class,'index'])->name('mypost');
+
 
 Route::get('/posts',[PostController::class,'posts'])->name('posts');
 Route::post('/create',[PostController::class,'create'])->name('create');
@@ -23,3 +28,5 @@ Route::post('/',[AuthController::class,'postLogin'])->name('postLogin');
 Route::get('/register',[AuthController::class,'register'])->name('register');
 Route::post('/register',[AuthController::class,'postRegister'])->name('postRegister');
 Route::get('/logout', [AuthController::class, 'logout'])->name("logout");
+
+Route::post('/post/{id}/comments',[CommentController::class,'store'])->name('comment.store');

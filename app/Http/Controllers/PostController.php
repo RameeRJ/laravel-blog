@@ -27,10 +27,24 @@ class PostController extends Controller
             'text.required' => 'The description field is required.',
         ];
         
+        $user=Auth()->user();
+        $userid=$user->id;
+        $name=$user->name;
+
+
         $post=new Post;
         $post->title = $request->title;
         $post->post_text = $request->post_text;
-        $post->image = $request->image;
+        $post->poststatus = 'active';
+        $post->user_id = $userid;
+        $post->username = $name;
+
+
+        $image=$request->image;
+        if($image){
+        $imagename=time().'.'.$image->getClientOriginalExtension();
+        $image->move('postimage',$imagename);
+        $post->image=$imagename;}
         $post->save();
         return redirect()->route('home')->with('message',"Your post was created successfully!");
 

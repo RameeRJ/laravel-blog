@@ -32,19 +32,17 @@
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <div class="small text-muted">{{ $post->created_at }}</div>
+                                    <div class="small text-muted">{{ $post->username }}</div>
                                     <h2 class="card-title h4">{{ $post->title }}</h2>
                                     <p class="card-text">{{ $post->post_text }}</p>
                                     <center>
                                     <a class="btn btn-show" href="{{ route('show',$post->id)}}"><i class="fa-solid fa-eye"></i>&nbsp;&nbsp;&nbsp;&nbsp;Show</a>
-                                    <a class="btn btn-primary" href="{{ route('edit',$post->id) }}"><i class="fa-regular fa-pen-to-square"></i>&nbsp;&nbsp;&nbsp;&nbsp;Edit</a>
-                                    <a class="btn btn-destroy" href="{{ route('destroy',$post->id) }}"><i class="fa-solid fa-xmark"></i>&nbsp;&nbsp;Delete</a>
+                                    {{-- <a class="btn btn-primary" href="{{ route('edit',$post->id) }}"><i class="fa-regular fa-pen-to-square"></i>&nbsp;&nbsp;&nbsp;&nbsp;Edit</a>
+                                    <a class="btn btn-destroy" href="{{ route('destroy',$post->id) }}"><i class="fa-solid fa-xmark"></i>&nbsp;&nbsp;Delete</a> --}}
                                     </center>
                                 </div>
                             </div>
                           @endforeach
-                    <center>
-                     <a href="{{ route('posts')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add Post</a>
-                    </center>
                <br><br><br>
                 </div>
             </div>
