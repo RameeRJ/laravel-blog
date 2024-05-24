@@ -6,8 +6,9 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth; 
+use App\Http\Middleware\AuthMiddleware;
 
-Route::get('/home',[HomeController::class,'index'])->name('home');
+Route::get('/home',[HomeController::class,'index'])->middleware('auth')->name('home');
 Route::view('/about','about')->name('about');
 Route::view('/contact','contact')->name('contact');
 
