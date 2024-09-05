@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Log;
 use  App\Models\User;
 
 class AuthController extends Controller
@@ -22,19 +22,29 @@ class AuthController extends Controller
     
     public  function postLogin(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password'=>'required'
+        $request->validate([ 
+            'email'=>'required|email',  
+            'password'=>'required' 
         ]);
-
-        $credential = $request -> only(['email','password']);
+        $credentials  = $request->only('email', 'password');
         
-        if (Auth::attempt($credential))
-         {
-                return redirect()->intended(route('home'))->with("success",'Signed in successfully');
+        if(Auth::attempt($credentials))
+        {
 
-         }
-                 return redirect(route('login'))->with("error", "Email or password are wrong.");
+            $user = Auth::user();
+            $userName = $user->name;
+            Log::info('logged in  user',[$userName]);
+
+            
+            session([
+                'user_id' => $user->id,
+                'user_name' => $user->name,
+                'user_email' => $user->email,
+               
+            ]);
+            return redirect()->intended(route('home'))->with("success",'Signed in successfully');
+        }
+        return redirect(route('login'))->with('error','Invalid Email or Password!');
     }
 
     public function postRegister(Request $request)

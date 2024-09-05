@@ -1,5 +1,11 @@
 @extends('layouts.app')
 @section('content')
+@if(session()->has('error'))
+        <div class="alert alert-danger">
+            <button type="button" onclick="window.location.href='posts';" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+            {{ session()->get('error') }}
+        </div>
+    @endif
     <div  class="form-container">
         <h1>Add Post</h1>
         <form action="{{ route('create') }}" method="post" enctype="multipart/form-data">

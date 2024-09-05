@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MypostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LocaleController;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth; 
@@ -13,6 +14,7 @@ Route::get('/home',[HomeController::class,'index'])->name('home');
 Route::view('/about','about')->name('about');
 Route::view('/contact','contact')->name('contact');
 Route::get('/mypost',[HomeController::class,'mypost'])->name('mypost');
+Route::get('/add',[HomeController::class,'add'])->name('add');
 Route::get('/mypost',[MyPostController::class,'index'])->name('mypost');
 
 
@@ -30,3 +32,5 @@ Route::post('/register',[AuthController::class,'postRegister'])->name('postRegis
 Route::get('/logout', [AuthController::class, 'logout'])->name("logout");
 
 Route::post('/post/{id}/comments',[CommentController::class,'store'])->name('comment.store');
+
+Route::get('locale/{lang}', [LocaleController::class, 'setLocale'])->name('locale.switch');

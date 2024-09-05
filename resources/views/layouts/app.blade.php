@@ -17,14 +17,23 @@
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-            <a class="btn btn-primary" href="{{route('logout')}}"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;Log out</a>
+            <a class="btn btn-primary" href="{{route('logout')}}"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;@lang('messages.logout')</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="{{ route('home') }}"><i class="fa-solid fa-house"></i>&nbsp;&nbsp;Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('about') }}"><i class="fa-solid fa-eject"></i>&nbsp;&nbsp;About</a></li>
-                       <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}"><i class="fa-solid fa-address-book"></i>&nbsp;&nbsp;Contact</a></li>
-                       <li class="nav-item"><a class="nav-link" href="{{ route('mypost') }}">&nbsp;&nbsp;My Post</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('home') }}"><i class="fa-solid fa-house"></i>&nbsp;&nbsp;@lang('messages.home')</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('about') }}"><i class="fa-solid fa-eject"></i>&nbsp;&nbsp;@lang('messages.about')</a></li>
+                       <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}"><i class="fa-solid fa-address-book"></i>&nbsp;&nbsp;@lang('messages.contact')</a></li>
+                       <li class="nav-item"><a class="nav-link" href="{{ route('mypost') }}"><i class="fa-solid fa-file"></i>&nbsp;&nbsp;@lang('messages.My post')</a></li>
+                       <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-globe"></i>&nbsp;&nbsp;@lang('messages.languages')
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                            <li><a class="dropdown-item" href="{{ route('locale.switch', ['lang' => 'en']) }}">English</a></li>
+                            <li><a class="dropdown-item" href="{{ route('locale.switch', ['lang' => 'fr']) }}">French</a></li>
+                        </ul>
+                    </li>
                     </ul>
                 </div>
             </div>
