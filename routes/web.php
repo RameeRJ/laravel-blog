@@ -14,15 +14,14 @@ Route::get('/home',[HomeController::class,'index'])->name('home');
 Route::view('/about','about')->name('about');
 Route::view('/contact','contact')->name('contact');
 Route::get('/mypost',[HomeController::class,'mypost'])->name('mypost');
-Route::get('/add',[HomeController::class,'add'])->name('add');
 Route::get('/mypost',[MyPostController::class,'index'])->name('mypost');
-
+// Route::view('/mypost','mypost')->name('mypost'); 
 
 Route::get('/posts',[PostController::class,'posts'])->name('posts');
 Route::post('/create',[PostController::class,'create'])->name('create');
 Route::get('/edit/{id}',[PostController::class,'edit'])->name('edit');
-Route::post('/update/{id}',[PostController::class,'update'])->name('update');
-Route::get('/destroy/{id}',[PostController::class,'destroy'])->name('destroy');
+Route::put('/update/{id}',[PostController::class,'update'])->name('update');
+Route::delete('/destroy/{id}',[PostController::class,'destroy'])->name('destroy');
 Route::get('/show/{id}',[PostController::class,'show'])->name('show');
 
 Route::get('/',[AuthController::class,'login'])->name('login');

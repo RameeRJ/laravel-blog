@@ -2,15 +2,15 @@
 @section('content')
     <div  class="form-container">
     <h1>Update Post</h1>
-    <form action="{{ route('update',$data->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('update',$post->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         <label for="title">Edit Post Title:</label>
-        <input type="text" id="title" name="title" value="{{ $data->title }}">   
+        <input type="text" id="title" name="title" value="{{ $post->title }}">   
         @error('title')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         <label for="post_text">Edit Post Description:</label>
-        <textarea id="post_text" name="post_text">{{$data->post_text}}</textarea>
+        <textarea id="post_text" name="post_text">{{$post->post_text}}</textarea>
         @error('post_text')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror

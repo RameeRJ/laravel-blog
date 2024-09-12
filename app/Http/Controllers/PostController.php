@@ -4,93 +4,103 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
+    // Show add post form
     public function posts()
     {
-    return view('post.add');
+        return view('post.add');
     }
-    
 
-    public  function create(Request $request)
+    // Create a new post
+    public function create(Request $request)
     {
-
+        // Validate the incoming request
         $request->validate([
-            'title'=>'required|max:10|unique:posts',
-            'post_text'=>['required'],
+            'title' => 'required|max:255|unique:posts',  // Adjust max length if needed
+            'post_text' => 'required',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
         ]);
-        $messages = [
-            'title.required' => 'The title field is required.',
-            'title.min' => 'The title must be at least 10 characters.',
-            'title.unique' => 'The title has already been taken.',
-            'text.required' => 'The description field is required.',
-        ];
-        
-        $user=Auth()->user();
-        $userid=$user->id;
-        $name=$user->name;
 
-
-        $post=new Post;
+        $user = Auth::user();
+        $post = new Post;
         $post->title = $request->title;
         $post->post_text = $request->post_text;
         $post->poststatus = 'active';
-        $post->user_id = $userid;
-        $post->username = $name;
+        $post->user_id = $user->id;
+        $post->username = $user->name;
 
+        // Handle image upload if present
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagename = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('postimage'), $imagename);
+            $post->image = $imagename;
+        }
 
-        $image=$request->image;
-        if($image){
-        $imagename=time().'.'.$image->getClientOriginalExtension();
-        $image->move('postimage',$imagename);
-        $post->image=$imagename;}
         $post->save();
-        return redirect()->route('home')->with('message',"Your post was created successfully!");
 
+        // Redirect with a success message
+        return redirect()->route('home')->with('message', 'Your post was created successfully!');
     }
 
+    // Show edit post form
     public function edit($id)
-    {
-        $data=Post::find($id);
-        return  view('post.update',compact('data'));
+    {   
+        $post = Post::findOrFail($id);
 
+        // Authorization check: Only the post owner can edit the post
+        if (Gate::denies('edit-post', $post)) {
+            abort(403, 'Unauthorized access.');
+        }
+
+        return view('post.update', compact('post'));
     }
 
-    public function update(Request $request,$id)
+    // Update an existing post
+    public function update(Request $request, $id)
     {
-        
+        // Validate the request
         $request->validate([
-            'title'=>'required|max:10',
-            'post_text'=>'required',
+            'title' => 'required|string|max:255',
+            'post_text' => 'required|string',
         ]);
-        $messages = [
-            'title.required' => 'The title field is required.',
-            'title.max' => 'The title must be at least 10 characters.',
-            'text.required' => 'The description field is required.',
-        ];
-        
-        $post = post::find($id);
-        $post->title = $request->title;
-        $post->post_text = $request->post_text;
-        $post->save();
-        return redirect()->route('home')->with('message',"Your post was update successfully!");
 
+        $post = Post::findOrFail($id);
+
+        // Authorization check: Only the post owner can update the post
+
+        // Update the post
+        $post->update([
+            'title' => $request->input('title'),
+            'post_text' => $request->input('post_text'),
+        ]);
+
+        // Redirect with a success message
+        return redirect()->route('home')->with('message', 'Your post was updated successfully!');
     }
 
+    // Delete a post
     public function destroy($id)
     {
-        $data=Post::find($id);
-        $data->delete();
-        return redirect()->back()->with('message',"Your post was delete successfully!");
-           
+        $post = Post::findOrFail($id);
+
+        // Authorization check: Only the post owner can delete the post
+        if (Gate::denies('delete-post', $post)) {
+            return redirect()->route('home')->with('error', 'Unauthorized access.');
+        }
+
+        $post->delete();
+        return redirect()->back()->with('message', 'Your post was deleted successfully!');
     }
 
+    // Show a post
     public function show($id)
     {
-        $post=Post::find($id);
-        return  view('post.show', compact('post'));
-
+        $post = Post::findOrFail($id);
+        return view('post.show', compact('post'));
     }
-
 }

@@ -9,12 +9,16 @@ use Illuminate\Http\Request;
 class MyPostController extends Controller
 {
     public function index()
-    {
-        $posts = Post::where('username', Auth::user()->name)->latest()->get();
-
-        return view('mypost', compact( 'posts'));
+{
+    
+    if (Auth::check()) {
         
+        $posts = Post::where('username', Auth::user()->name)->latest()->get();
+        return view('mypost', compact('posts'));
+    } else {
+        return redirect()->route('login')->with('error', 'You need to log in to view your posts.');
     }
+}
     public function edit($id)
     {
         $data=Post::find($id);
@@ -23,18 +27,7 @@ class MyPostController extends Controller
     }
 
     public function update(Request $request,$id)
-    {
-        
-        // $request->validate([
-        //     'title'=>'required|max:10',
-        //     'post_text'=>'required',
-        // ]);
-        // $messages = [
-        //     'title.required' => 'The title field is required.',
-        //     'title.max' => 'The title must be at least 10 characters.',
-        //     'text.required' => 'The description field is required.',
-        // ];
-        
+    {        
         $post = post::find($id);
         $post->title = $request->title;
         $post->post_text = $request->post_text;
