@@ -10,9 +10,6 @@ use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth; 
 
-Route::get('/home',[HomeController::class,'index'])->name('home');
-Route::view('/about','about')->name('about');
-Route::view('/contact','contact')->name('contact');
 Route::get('/mypost',[HomeController::class,'mypost'])->name('mypost');
 Route::get('/mypost',[MyPostController::class,'index'])->name('mypost');
 // Route::view('/mypost','mypost')->name('mypost'); 
@@ -33,3 +30,10 @@ Route::get('/logout', [AuthController::class, 'logout'])->name("logout");
 Route::post('/post/{id}/comments',[CommentController::class,'store'])->name('comment.store');
 
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale'])->name('locale.switch');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::view('/about', 'about')->name('about');
+    Route::view('/contact', 'contact')->name('contact');
+});
